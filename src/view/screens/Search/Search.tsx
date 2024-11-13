@@ -630,7 +630,7 @@ export function SearchScreen(
   const setMinimalShellMode = useSetMinimalShellMode()
 
   // Query terms
-  const queryParam = props.route?.params?.q ?? ''
+  const queryParam = decodeURIComponent(props.route?.params?.q ?? '')
   const [searchText, setSearchText] = React.useState<string>(queryParam)
   const {data: autocompleteData, isFetching: isAutocompleteFetching} =
     useActorAutocompleteQuery(searchText, true)
@@ -752,7 +752,7 @@ export function SearchScreen(
       updateSearchHistory(item)
 
       if (isWeb) {
-        navigation.push('Search', {q: item})
+        navigation.push('Search', {q: encodeURIComponent(item)})
       } else {
         textInput.current?.blur()
         navigation.setParams({q: item})
